@@ -1,4 +1,6 @@
 # Write your code below game_hash
+require 'pry'
+
 def game_hash
   {
     home: {
@@ -127,3 +129,101 @@ def game_hash
 end
 
 # Write code here
+def num_points_scored(playerSearch)
+  team = :home
+  result = ""
+  result = player_search(team, playerSearch, :points, result)
+  if result == ""
+    team = :away
+    result = player_search(team, playerSearch, :points, result)
+  end
+  result
+end
+
+def player_search(team, name, symbol, res)
+  result = res
+  game_hash[team][:players].each do |player|
+    if player[:player_name] == name
+      result = player[symbol]
+    end
+  end
+  result
+end
+
+def shoe_size(sizeSearch)
+  team = :home
+  result = ""
+  result = player_search(team, sizeSearch, :shoe, result)
+  if result == ""
+    team = :away
+    result = player_search(team, sizeSearch, :shoe, result)
+  end
+  result
+end
+
+def team_colors(team_name)
+  if game_hash[:home][:team_name] == team_name
+    result = game_hash[:home][:colors]
+  else
+    result = game_hash[:away][:colors]
+  end
+end
+
+def team_names
+  result = []
+  game_hash.each do |key, value|
+    result << game_hash[key][:team_name]
+  end
+  result
+end
+
+def player_numbers(team_name)
+  result = []
+  team = :home
+  if game_hash[team][:team_name] != team_name
+    team = :away
+  end
+  game_hash[team][:players].each do |player|
+    result << player[:number]
+  end
+  result.sort!
+end
+
+def player_stats(search)
+  result = {}
+  roster = game_hash[:home][:players]
+  roster.each do |player|
+    if player.has_value? (search)
+      result = player
+    end
+  end
+  if result == {}
+    roster = game_hash[:away][:players]
+    roster.each do |player|
+      if player.has_value? (search)
+        result = player
+      end
+    end
+  end
+  result
+end
+
+def big_shoe_rebounds ()
+  result = ""
+  max_size = 0
+  roster = game_hash[:home][:players]
+  roster.each do |player|
+    if player[:shoe] > max_size
+      result = player[:rebounds]
+      max_size = player[:shoe]
+    end
+  end
+  roster = game_hash[:away][:players]
+  roster.each do |player|
+    if player[:shoe] > max_size
+      result = player[:rebounds]
+      max_size = player[:shoe]
+    end
+  end
+  result
+end
