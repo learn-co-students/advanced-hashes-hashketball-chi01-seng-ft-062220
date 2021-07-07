@@ -126,4 +126,96 @@ def game_hash
   }
 end
 
-# Write code here
+
+def shoe_size(name)
+  game_hash.each do |location, team_data|
+    team_data.each do |attribute, data|
+      if data.class == Array && data.length > 3
+        data.each do |players|
+          if players[:player_name] == name
+            return players[:shoe]
+          end
+        end
+      end
+    end
+  end
+end
+
+def num_points_scored(name)
+  game_hash.each do |location, team_data|
+    team_data.each do |attribute, data|
+      if data.class == Array && data.length > 3
+        data.each do |players|
+          if players[:player_name] == name
+            return players[:points]
+          end
+        end
+      end
+    end
+  end
+end
+
+def team_colors(name)
+  game_hash.each do |location, team_data|
+    team_data.each do |k, v|
+      if team_data[:team_name] == name
+        return team_data[:colors]
+        Next
+      end
+    end
+  end
+end
+
+def team_names
+#returns an array of team names
+teams_array = []
+  game_hash.each do |location, team_data|
+    teams_array.push(team_data[:team_name])
+  end
+    return teams_array
+end
+
+def player_numbers(name)
+  #takes in an arguement of a team name and returns array of jersey numbers of that team
+  jersey_array = []
+  game_hash.each do |location, team_data|
+    if team_data[:team_name] == name
+      team_data.each do |attribute, data|
+        if data.class == Array && data.length > 3
+          data.each do |players|
+            jersey_array.push(players[:number])
+          end
+        end
+      end
+    end
+  end
+  return jersey_array
+end
+
+def player_stats(name)
+  game_hash.each do |location, team_data|
+    team_data.each do |attribute, data|
+      if data.class == Array && data.length > 3
+        data.each do |players|
+          if players[:player_name] == name
+            return players
+          end
+        end
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+  game_hash.each do |location, team_data|
+    team_data.each do |attribute, data|
+      if data.class == Array && data.length > 3
+        data.each do |players|
+          if players[:shoe] == 19
+            return players[:rebounds]
+          end
+        end
+      end
+    end
+  end
+end
